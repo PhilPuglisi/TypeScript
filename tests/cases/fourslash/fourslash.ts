@@ -243,6 +243,7 @@ declare namespace FourSlashInterface {
         applicableRefactorAvailableForRange(): void;
 
         refactorAvailable(name: string, actionName?: string): void;
+        refactorAvailableForTriggerReason(triggerReason: RefactorTriggerReason, name: string, action?: string): void;
     }
     class verify extends verifyNegatable {
         assertHasRanges(ranges: Range[]): void;
@@ -394,6 +395,8 @@ declare namespace FourSlashInterface {
         noMoveToNewFile(): void;
 
         generateTypes(...options: GenerateTypesOptions[]): void;
+
+        organizeImports(newContent: string): void;
     }
     class edit {
         backspace(count?: number): void;
@@ -681,6 +684,8 @@ declare namespace FourSlashInterface {
         triggerCharacter?: string,
     }
 
+    export type RefactorTriggerReason = "implicit" | "invoked";
+
     export interface VerifyCodeFixAvailableOptions {
         readonly description: string;
         readonly actions?: ReadonlyArray<{ readonly type: string, readonly data: {} }>;
@@ -752,6 +757,9 @@ declare namespace completion {
         GlobalsOrKeywords = "4",
         AutoImportSuggestions = "5",
         JavascriptIdentifiers = "6"
+    }
+    export const enum CompletionSource {
+        ThisProperty = "ThisProperty/"
     }
     export const globalThisEntry: Entry;
     export const undefinedVarEntry: Entry;
